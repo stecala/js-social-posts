@@ -98,7 +98,6 @@ const posts = [
 ]
 //* create const of the container of Post and button
 const postContainer = document.getElementById('container')
-let likeBtn;
 
 //! we have to create the post in a cycle
 posts.forEach((element)=>{
@@ -133,13 +132,35 @@ posts.forEach((element)=>{
                                     </div>
                                 </div>
                             </div>`
-    console.log(is_liked)
-    likeBtn = document.querySelector(`.js-like-button-${id}`)
+    //! transform in green the already liked post
+    let likeBtn = document.querySelector(`.js-like-button-${id}`)
     if(is_liked){
-        likeBtn.classList.add('like-button--liked')
+        addLikeColor(likeBtn)
     }
+
+    //! click on button will change the color of the button
+    likeBtn.addEventListener('click',function(){
+        if(posts.is_liked){
+            addLikeColor(likeBtn)
+        }
+        else
+        {
+            removeLikeColor(likeBtn)
+        } 
+        posts.is_liked = !posts.is_liked
+
+    })
+
 })
 
-// function liked(){
 
-// }
+
+
+
+
+function addLikeColor(elementToAddTheClass){
+    elementToAddTheClass.classList.add('like-button--liked')
+}
+function removeLikeColor(elementToRemoveTheClass){
+    elementToRemoveTheClass.classList.remove('like-button--liked')
+}
