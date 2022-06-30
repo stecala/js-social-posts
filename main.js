@@ -101,8 +101,10 @@ const postContainer = document.getElementById('container')
 
 //! we have to create the post in a cycle
 posts.forEach((element)=>{
+    const {id, content, media, author, likes, created} = element
+    //! change data format
+    changeDate(element)
 
-    const {id, content, media, author, likes, is_liked, created} = element
     let newPost = document.createElement('div')
     newPost.innerHTML = `<div class="post">
                                 <div class="post__header">
@@ -112,7 +114,7 @@ posts.forEach((element)=>{
                                         </div>
                                         <div class="post-meta__data">
                                             <div class="post-meta__author">${author.name}</div>
-                                            <div class="post-meta__time">${created}</div>
+                                            <div class="post-meta__time">${element.created}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -155,12 +157,15 @@ posts.forEach((element)=>{
         } 
         element.is_liked = !element.is_liked
     })
-    console.log(likeBtn)
 })
 
 
 
-
+function changeDate(element){
+    element.created = element.created.split("-");
+    element.created.reverse()
+    element.created = element.created.join('/')
+}
 
 
 function addLikeColor(elementToAddTheClass){
