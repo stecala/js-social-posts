@@ -101,8 +101,10 @@ const postContainer = document.getElementById('container')
 
 //! we have to create the post in a cycle
 posts.forEach((element)=>{
-    const{id, content, media, author, likes, is_liked, created} = element
-    postContainer.innerHTML+=`<div class="post">
+
+    const {id, content, media, author, likes, is_liked, created} = element
+    let newPost = document.createElement('div')
+    newPost.innerHTML = `<div class="post">
                                 <div class="post__header">
                                     <div class="post-meta">
                                         <div class="post-meta__icon">
@@ -127,30 +129,33 @@ posts.forEach((element)=>{
                                             </a>
                                         </div>
                                         <div class="likes__counter">
-                                            Piace a <b id="like-counter-1" class="js-likes-counter">${likes}</b> persone
+                                            Piace a <b id="like-counter-${id}" class="js-likes-counter">${likes}</b> persone
                                         </div>
                                     </div>
                                 </div>
                             </div>`
+    postContainer.append(newPost)
     //! transform in green the already liked post
     let likeBtn = document.querySelector(`.js-like-button-${id}`)
-    if(is_liked){
+    if(element.is_liked){
         addLikeColor(likeBtn)
     }
 
     //! click on button will change the color of the button
-    likeBtn.addEventListener('click',function(){
-        if(posts.is_liked){
+    let likesContainer=document.getElementById(`like-counter-${id}`)
+    likeBtn.addEventListener('click',()=>{
+        if(!element.is_liked){
             addLikeColor(likeBtn)
+            likesContainer.innerHTML= ++element.likes
         }
         else
         {
             removeLikeColor(likeBtn)
+            likesContainer.innerHTML= --element.likes
         } 
-        posts.is_liked = !posts.is_liked
-
+        element.is_liked = !element.is_liked
     })
-
+    console.log(likeBtn)
 })
 
 
