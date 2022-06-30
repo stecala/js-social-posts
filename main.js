@@ -96,8 +96,9 @@ const posts = [
         "created": "2021-12-11"
     }
 ]
-//* create const of the container of Post
+//* create const of the container of Post and button
 const postContainer = document.getElementById('container')
+let likeBtn;
 
 //! we have to create the post in a cycle
 posts.forEach((element)=>{
@@ -121,7 +122,7 @@ posts.forEach((element)=>{
                                 <div class="post__footer">
                                     <div class="likes js-likes">
                                         <div class="likes__cta">
-                                            <a class="like-button  js-like-button" href="#" data-postid="1">
+                                            <a class="like-button  js-like-button-${id}" href="javascript:;" data-postid="${id}">
                                                 <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                                                 <span class="like-button__label">Mi Piace</span>
                                             </a>
@@ -132,4 +133,13 @@ posts.forEach((element)=>{
                                     </div>
                                 </div>
                             </div>`
+    console.log(is_liked)
+    likeBtn = document.querySelector(`.js-like-button-${id}`)
+    if(is_liked){
+        likeBtn.classList.add('like-button--liked')
+    }
 })
+
+// function liked(){
+
+// }
