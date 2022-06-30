@@ -101,7 +101,7 @@ const postContainer = document.getElementById('container')
 
 //! we have to create the post in a cycle
 posts.forEach((element)=>{
-    const {id, content, media, author, likes, created} = element
+    const {id, content, media, author, likes} = element
 
     //! change data format
     changeDate(element)
@@ -137,37 +137,38 @@ posts.forEach((element)=>{
                                 </div>
                             </div>`
     postContainer.append(newPost)
+    
     //! transform in green the already liked post
     let likeBtn = document.querySelector(`.js-like-button-${id}`)
     if(element.is_liked){
-        addLikeColor(likeBtn)
+        addClass(likeBtn, 'like-button--liked')
     }
 
     //! click on button will change the color of the button
     let likesContainer=document.getElementById(`like-counter-${id}`)
     likeBtn.addEventListener('click',()=>{
         if(!element.is_liked){
-            addLikeColor(likeBtn)
+            addClass(likeBtn, 'like-button--liked')
             likesContainer.innerHTML= ++element.likes
         }
         else
         {
-            removeLikeColor(likeBtn)
+            removeClass(likeBtn, 'like-button--liked')
             likesContainer.innerHTML= --element.likes
         } 
         element.is_liked = !element.is_liked
     })
+
     //! profile picture
     let profilePicContainer = document.getElementById(`profile-${id}`);
     let imgNull=profilePicContainer.children
     if (author.image == null || author.image == 'null') {
-        profilePicContainer.classList.add('profile-pic-default');
+        addClass(profilePicContainer, 'profile-pic-default')
         imgNull[0].remove()
         let firstLetter = document.createElement('span')
         let firstLettersToOutput=author.name.split(" ").slice(0,2).map(element => element[0]).join('');
         firstLetter.innerHTML= firstLettersToOutput
         profilePicContainer.append(firstLetter)
-        console.log(firstLetter)
     }
 })
 
@@ -180,9 +181,10 @@ function changeDate(element){
 }
 
 
-function addLikeColor(elementToAddTheClass){
-    elementToAddTheClass.classList.add('like-button--liked')
+function addClass(elementToAddTheClass, classToAdd){
+    elementToAddTheClass.classList.add(classToAdd)
 }
-function removeLikeColor(elementToRemoveTheClass){
+
+function removeClass(elementToRemoveTheClass, classToRemove){
     elementToRemoveTheClass.classList.remove('like-button--liked')
 }
