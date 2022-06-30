@@ -102,14 +102,14 @@ const postContainer = document.getElementById('container')
 //! we have to create the post in a cycle
 posts.forEach((element)=>{
     const {id, content, media, author, likes, created} = element
+
     //! change data format
     changeDate(element)
-
     let newPost = document.createElement('div')
     newPost.innerHTML = `<div class="post">
                                 <div class="post__header">
                                     <div class="post-meta">
-                                        <div class="post-meta__icon">
+                                        <div class="post-meta__icon" id="profile-${id}">
                                             <img class="profile-pic" src="${author.image}" alt="${author.name}">
                                         </div>
                                         <div class="post-meta__data">
@@ -125,7 +125,7 @@ posts.forEach((element)=>{
                                 <div class="post__footer">
                                     <div class="likes js-likes">
                                         <div class="likes__cta">
-                                            <a class="like-button  js-like-button-${id}" href="javascript:;" data-postid="${id}">
+                                            <a class="like-button  js-like-button-${id}" href="javascript:;" data-postid="profile-${id}">
                                                 <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                                                 <span class="like-button__label">Mi Piace</span>
                                             </a>
@@ -157,6 +157,18 @@ posts.forEach((element)=>{
         } 
         element.is_liked = !element.is_liked
     })
+    //! profile picture
+    let profilePicContainer = document.getElementById(`profile-${id}`);
+    let imgNull=profilePicContainer.children
+    if (author.image == null || author.image == 'null') {
+        profilePicContainer.classList.add('profile-pic-default');
+        imgNull[0].remove()
+        let firstLetter = document.createElement('span')
+        let firstLettersToOutput=author.name.split(" ").slice(0,2).map(element => element[0]).join('');
+        firstLetter.innerHTML= firstLettersToOutput
+        profilePicContainer.append(firstLetter)
+        console.log(firstLetter)
+    }
 })
 
 
